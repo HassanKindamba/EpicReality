@@ -13,6 +13,7 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Price</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
         <tr>
             <td>{{ $service->name }}</td>
             <td>{{ Str::limit($service->description,50) }}</td>
+            <td>{{ $service->price }} TZS</td>
             <td>
                 <a href="{{ route('services.edit', $service->id) }}" class="btn btn-sm btn-warning">Edit</a>
                 <form action="{{ route('services.destroy', $service->id) }}" method="POST" class="d-inline-block">
