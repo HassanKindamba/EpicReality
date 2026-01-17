@@ -23,11 +23,13 @@ class ServiceController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
+             'price' => 'required|numeric|min:0',
         ]);
 
         $service = new Service();
         $service->name = $request->name;
         $service->description = $request->description;
+        $service->price = $request->price;
         $service->save();
 
         return redirect()->route('services.index')->with('success', 'Service added successfully!');
@@ -43,10 +45,12 @@ class ServiceController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'required',
+        'price' => 'required',
     ]);
 
     $service->name = $request->name;
     $service->description = $request->description;
+    $service->price = $request->price;
     $service->save();
 
     return redirect()->route('services.index')->with('success', 'Service updated successfully!');
