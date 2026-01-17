@@ -146,6 +146,7 @@
                     </div>
                     <h3>{{ $service->name }}</h3>
                     <p>{{ $service->description }}</p>
+                    <p>Price: {{ $service->price }} TZS</p>
                 </div>
             </div>
         @endforeach
