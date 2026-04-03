@@ -21,27 +21,30 @@ class AgentController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'name'  => 'required|string|max:255',
-        // 'email' => 'required|email',
-        'phone' => 'required',
-        'photo' => 'nullable|image',
+        'name'        => 'required|string|max:255',
+        'email'       => 'required|email|max:255',
+        'phone'       => 'required|string|max:20',
+        'description' => 'required|string',
+        'photo'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
-    $agent = new Agent();   // 👈 hakuna create()
+    $agent = new Agent();
 
-    $agent->name  = $request->name;
-    // $agent->email = $request->email;
-    $agent->phone = $request->phone;
+    $agent->name        = $request->name;
+    $agent->email       = $request->email;
+    $agent->phone       = $request->phone;
+    $agent->description = $request->description;
 
     if ($request->hasFile('photo')) {
         $agent->photo = $request->file('photo')->store('agents', 'public');
     }
 
-    $agent->save(); // 👈 hapa ndiyo save
+    $agent->save();
 
-    return redirect()->route('agents.index')
+    return redirect()->route('admin.agents.index')
         ->with('success', 'Agent added successfully!');
 }
+
 
     public function edit(Agent $agent)
     {
@@ -51,29 +54,38 @@ class AgentController extends Controller
     public function update(Request $request, Agent $agent)
 {
     $request->validate([
-        'name'  => 'required|string|max:255',
-        // 'email' => 'required|email',
-        'phone' => 'required',
-        'photo' => 'nullable|image',
+        'name'        => 'required|string|max:255',
+        'email'       => 'required|email|max:255',
+        'phone'       => 'required|string|max:20',
+        'description' => 'required|string',
+        'photo'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
-    $agent->name  = $request->name;
-    // $agent->email = $request->email;
-    $agent->phone = $request->phone;
+    $agent->name        = $request->name;
+    $agent->email       = $request->email;
+    $agent->phone       = $request->phone;
+    $agent->description = $request->description;
 
     if ($request->hasFile('photo')) {
+
+        // Futa picha ya zamani kama ipo
+        if ($agent->photo && \Storage::disk('public')->exists($agent->photo)) {
+            \Storage::disk('public')->delete($agent->photo);
+        }
+
+        // Hifadhi picha mpya
         $agent->photo = $request->file('photo')->store('agents', 'public');
     }
 
     $agent->save();
 
-    return redirect()->route('agents.index')
+    return redirect()->route('admin.agents.index')
         ->with('success', 'Agent updated successfully!');
 }
 
     public function destroy(Agent $agent)
     {
         $agent->delete();
-        return redirect()->route('agents.index')->with('success', 'Agent deleted successfully!');
+        return redirect()->route('admin.agents.index')->with('success', 'Agent deleted successfully!');
     }
 }

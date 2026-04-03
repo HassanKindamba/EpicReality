@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Home;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -19,31 +20,29 @@ class HomeController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validate first
-    $request->validate([
-        'address' => 'required',
-        'description' => 'required',
-        'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
-    ]);
+    {
+        $request->validate([
+            'address' => 'required',
+            'eneo' => 'required',
+            'jengo' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-    // Create manually
-    $home = new Home();
-    $home->address = $request->address;
-    $home->description = $request->description;
+        $home = new Home;
 
-    // Handle image if uploaded
-    if ($request->hasFile('image')) {
-        $home->image = $request->file('image')->store('homes', 'public');
+        $home->address = $request->address;
+        $home->eneo   = $request->eneo;
+        $home->jengo  = $request->jengo;
+
+        if ($request->hasFile('image')) {
+            $home->image = $request->file('image')->store('homes', 'public');
+        }
+
+        $home->save();
+
+        return redirect()->route('admin.homes.index')
+                         ->with('success', 'Home added successfully.');
     }
-
-    $home->save();
-
-    return redirect()->route('homes.index')
-                     ->with('success', 'Home added successfully');
-}
-
-
 
     public function edit(Home $home)
     {
@@ -53,19 +52,40 @@ class HomeController extends Controller
     public function update(Request $request, Home $home)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
+            'address' => 'required',
+            'eneo' => 'required',
+            'jengo' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $home->update($request->all());
+        if ($request->hasFile('image')) {
+            // Futa picha ya zamani
+            if ($home->image) {
+                Storage::disk('public')->delete($home->image);
+            }
 
-        return redirect()->route('homes.index')->with('success', 'Home updated successfully.');
+            $home->image = $request->file('image')->store('homes', 'public');
+        }
+
+        $home->address = $request->address;
+        $home->eneo   = $request->eneo;
+        $home->jengo  = $request->jengo;
+
+        $home->save();
+
+        return redirect()->route('admin.homes.index')
+                         ->with('success', 'Home updated successfully.');
     }
 
     public function destroy(Home $home)
     {
+        if ($home->image) {
+            Storage::disk('public')->delete($home->image);
+        }
+
         $home->delete();
-        return redirect()->route('homes.index')->with('success', 'Home deleted successfully.');
+
+        return redirect()->route('admin.homes.index')
+                         ->with('success', 'Home deleted successfully.');
     }
 }

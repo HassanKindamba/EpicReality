@@ -12,11 +12,13 @@
             <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('homes.index') }}">Homes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('services.index') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('properties.index') }}">Properties</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('agents.index') }}">Agents</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.homes.index') }}">Homes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.services.index') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.properties.index') }}">Properties</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.agents.index') }}">Agents</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.users.index') }}">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimonials.index') }}">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.contact.index') }}">Contact</a></li>
                     <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf

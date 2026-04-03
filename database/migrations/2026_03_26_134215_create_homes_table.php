@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-     Schema::create('homes', function (Blueprint $table) {
-    $table->id();
-    $table->string('address')->nullable();
-    $table->text('description');      // Add this
-    $table->string('image')->nullable();  // Optional
-    $table->timestamps();
-});
-
-
+        Schema::create('homes', function (Blueprint $table) {
+            $table->id();
+            $table->string('address')->nullable();
+            $table->text('description')->nullable(); // optional, avoid errors
+            $table->string('image')->nullable(); // optional
+            $table->timestamps();
+        });
     }
 
     /**

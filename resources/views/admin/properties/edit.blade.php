@@ -4,20 +4,20 @@
 
 @section('content')
 <h1>Edit Property</h1>
-<form action="{{ route('properties.update', $property->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.properties.update', $property->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
+    <div class="mb-3">
+        <label>ID</label>
+        <input type="text" name="id" class="form-control" value="{{ $property->id }}" required>
+    </div>
     <div class="mb-3">
         <label>Title</label>
         <input type="text" name="title" class="form-control" value="{{ $property->title }}" required>
     </div>
     <div class="mb-3">
-        <label>Description</label>
-        <textarea name="description" class="form-control" rows="4" required>{{ $property->description }}</textarea>
-    </div>
-    <div class="mb-3">
-        <label>Price</label>
-        <input type="number" name="price" class="form-control" value="{{ $property->price }}" step="0.01" required>
+        <label>Link</label>
+        <input type="url" name="link" class="form-control" value="{{ $property->link }}" placeholder="https://example.com" required>
     </div>
     <div class="mb-3">
         <label>Image</label>

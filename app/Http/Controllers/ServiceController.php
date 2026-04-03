@@ -21,19 +21,30 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required',
-             'price' => 'required|numeric|min:0',
+            'name'        => 'required|string|max:255',
+            'description' => 'required|string',
+            'price'       => 'required|numeric',
+            'icon'        => 'nullable|image',
+            'link'        => 'nullable|url',
         ]);
 
         $service = new Service();
-        $service->name = $request->name;
+        $service->name        = $request->name;
         $service->description = $request->description;
-        $service->price = $request->price;
+        $service->price       = $request->price;
+
+        // Hifadhi icon kama ime-upload
+        if ($request->hasFile('icon')) {
+            $service->icon = $request->file('icon')->store('services/icons', 'public');
+        }
+
+        $service->link = $request->link; // optional link
         $service->save();
 
-        return redirect()->route('services.index')->with('success', 'Service added successfully!');
+        return redirect()->route('admin.services.index')
+                         ->with('success', 'Service added successfully!');
     }
+
 
     public function edit(Service $service)
     {
@@ -41,25 +52,37 @@ class ServiceController extends Controller
     }
 
     public function update(Request $request, Service $service)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'required',
-        'price' => 'required',
-    ]);
+    {
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'required|string',
+            'price'       => 'required|numeric',
+            'icon'        => 'nullable|image',
+            'link'        => 'nullable|url',
+        ]);
 
-    $service->name = $request->name;
-    $service->description = $request->description;
-    $service->price = $request->price;
-    $service->save();
+        $service->name        = $request->name;
+        $service->description = $request->description;
+        $service->price       = $request->price;
 
-    return redirect()->route('services.index')->with('success', 'Service updated successfully!');
-}
+        // Hifadhi icon mpya ikiwa ime-upload
+        if ($request->hasFile('icon')) {
+            $service->icon = $request->file('icon')->store('services/icons', 'public');
+        }
+
+        $service->link = $request->link; // optional link
+        $service->save();
+
+        return redirect()->route('admin.services.index')
+                         ->with('success', 'Service updated successfully!');
+    }
 
 
+     // Destroy service
     public function destroy(Service $service)
     {
         $service->delete();
-        return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
+        return redirect()->route('admin.services.index')
+                         ->with('success', 'Service deleted successfully!');
     }
 }

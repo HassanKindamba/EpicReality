@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -7,15 +6,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::table('agents', function (Blueprint $table) {
-            $table->string('email')->after('name');
+        Schema::table('properties', function (Blueprint $table) {
+            $table->dropColumn('price');
         });
     }
 
     public function down()
     {
-        Schema::table('agents', function (Blueprint $table) {
-            $table->dropColumn('email');
+        Schema::table('properties', function (Blueprint $table) {
+            $table->decimal('price', 10, 2);
         });
     }
 };

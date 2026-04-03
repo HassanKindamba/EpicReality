@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>Add New User</h2>
 
-    <form action="{{ route('users.store') }}" method="POST">
+    <form action="{{ route('admin.users.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label>Name</label>

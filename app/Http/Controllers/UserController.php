@@ -27,14 +27,15 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|in:admin,agent', // add role validation
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin' => $request->has('is_admin') ? true : false,
+            'role' => $request->role, // save role (admin/agent)
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -52,11 +53,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'role' => 'required|in:admin,agent', // add role validation
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->is_admin = $request->has('is_admin') ? true : false;
+        $user->role = $request->role;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);

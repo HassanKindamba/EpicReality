@@ -66,7 +66,13 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            @if(session('success'))
+    <div style="background-color:#d4edda; color:#155724; padding:10px; margin-bottom:15px; border:1px solid #c3e6cb; border-radius:5px;">
+        {{ session('success') }}
+    </div>
+@endif
+            <form action="{{ route('contact.store') }}" method="POST">
+            @csrf
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -86,9 +92,9 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
+                  <!-- <div class="loading">Loading</div> -->
                   <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <!-- <div class="sent-message">Your message has been sent. Thank you!</div> -->
 
                   <button type="submit">Send Message</button>
                 </div>
