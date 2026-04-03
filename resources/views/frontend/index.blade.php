@@ -8,57 +8,62 @@
   
   <main class="main">
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+   <!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
 
-      <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+  <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
-        <div class="carousel-item active">
+    @foreach($homes as $key => $home)
+      <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+        
+        @if($home->image)
+          <img src="{{ asset('storage/'.$home->image) }}" alt="">
+        @else
           <img src="assets/img/hero-carousel/hero-carousel-1.jpg" alt="">
-          <div class="carousel-container">
-            <div>
-              <p>Doral, Florida</p>
-              <h2><span>204</span> Olive Road Two</h2>
-              <a href="property-single.html" class="btn-get-started">rent | $ 12.000</a>
-            </div>
+        @endif
+
+        <div class="carousel-container">
+          <div>
+            <p>{{ $home->address }}</p>
+            <h2>
+              <span>{{ $home->eneo }}</span> {{ $home->jengo }}
+            </h2>
+            <a href="#" class="btn-get-started">View Property</a>
           </div>
-        </div><!-- End Carousel Item -->
-
-        <div class="carousel-item">
-          <img src="assets/img/hero-carousel/hero-carousel-2.jpg" alt="">
-          <div class="carousel-container">
-            <div>
-              <p>Doral, Florida</p>
-              <h2><span>247</span> Venda Road Five</h2>
-              <a href="property-single.html" class="btn-get-started">sale | $ 356.000</a>
-            </div>
-          </div>
-        </div><!-- End Carousel Item -->
-
-        <div class="carousel-item">
-          <img src="assets/img/hero-carousel/hero-carousel-3.jpg" alt="">
-          <div class="carousel-container">
-            <div>
-              <p>Doral, Florida</p>
-              <h2><span>247</span> Vitra Road three</h2>
-              <a href="property-single.html" class="btn-get-started">rent | $ 3.000</a>
-            </div>
-          </div>
-        </div><!-- End Carousel Item -->
-
-        <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-        </a>
-
-        <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-        </a>
-
-        <ol class="carousel-indicators"></ol>
+        </div>
 
       </div>
+    
 
-    </section><!-- /Hero Section -->
+<style>
+  #hero .carousel-container h2 {
+    font-size: 40px;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  #hero .carousel-container p {
+    font-size: 18px;
+  }
+</style>
+
+    @endforeach
+
+    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
+
+    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
+
+    <ol class="carousel-indicators"></ol>
+
+  </div>
+
+</section>
+<!-- /Hero Section -->
+
 
     <!-- Services Section -->
     <section id="services" class="services section">
@@ -73,80 +78,41 @@
 
         <div class="row gy-4">
 
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item  position-relative">
-              <div class="icon">
-                <i class="bi bi-activity"></i>
-              </div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Nesciunt Mete</h3>
-              </a>
-              <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis tempore et consequatur.</p>
-            </div> -->
-          <!-- </div>End Service Item -->
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-broadcast"></i>
-              </div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Eosle Commodi</h3>
-              </a>
-              <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut nesciunt dolorem.</p>
-            </div> -->
-          <!-- </div>End Service Item -->
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-easel"></i>
-              </div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Ledo Markt</h3>
-              </a>
-              <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci eos earum corrupti.</p>
-            </div> -->
-          <!-- </div>End Service Item -->
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-bounding-box-circles"></i>
-              </div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Asperiores Commodit</h3>
-              </a>
-              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident adipisci neque.</p>
-              <a href="service-details.html" class="stretched-link"></a>
-            </div> -->
-          <!-- </div>End Service Item -->
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-calendar4-week"></i>
-              </div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Velit Doloremque</h3>
-              </a>
-              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem alias eius labore.</p>
-              <a href="service-details.html" class="stretched-link"></a>
-            </div> -->
-          <!-- </div>End Service Item -->
-
 
 <div class="row gy-4">
     @if($services->count())
         @foreach($services as $service)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="service-item position-relative">
-                    <div class="icon">
-                        <i class="bi bi-briefcase"></i>
-                    </div>
+                <div class="service-item position-relative text-start p-3"> <!-- text-start for left alignment -->
+
+                    <!-- Icon: only show if uploaded by admin of a system -->
+                    @if($service->icon)
+                        <div class="icon mb-3" style="width:50px; height:50px; border-radius:50%; overflow:hidden;">
+                            <img 
+                                src="{{ asset('storage/' . $service->icon) }}" 
+                                alt="{{ $service->name }}" 
+                                style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                    @endif
+
+                    <!-- Name -->
                     <h3>{{ $service->name }}</h3>
-                    <p>{{ $service->description }}</p>
+
+                    <!-- Description -->
+                    <p>{{ Str::limit($service->description, 100) }}</p>
+
+                    <!-- Price -->
                     <p>Price: {{ $service->price }} TZS</p>
+
+                    <!-- Link (optional) -->
+                    @if($service->link)
+                        <a href="{{ $service->link }}" target="_blank" 
+                           class="btn btn-sm mt-2" 
+                           style="background-color:#28a745; color:white; border:none;">
+                           Learn More
+                        </a>
+                    @endif
+
                 </div>
             </div>
         @endforeach
@@ -156,21 +122,6 @@
         </div>
     @endif
 </div>
-
-
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-chat-square-text"></i>
-              </div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Dolori Architecto</h3>
-              </a>
-              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae ducimus enim.</p>
-              <a href="service-details.html" class="stretched-link"></a>
-            </div> -->
-          <!-- </div>End Service Item -->
 
         </div>
 
@@ -191,27 +142,12 @@
 
         <div class="row gy-5">
 
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="member">
-              <div class="pic"><img src="assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Executive Officer</span>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div> -->
-          <!-- </div>End Team Member -->
-
-
 
 @forelse($agents as $agent)
 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-    <div class="member">
+    <div class="member d-flex flex-column" style="height: 100%;">
+
+        <!-- Picha kwanza -->
         <div class="pic">
             <img 
                 src="{{ $agent->photo ? asset('storage/' . $agent->photo) : asset('assets/img/team/default.jpg') }}" 
@@ -219,11 +155,14 @@
                 alt="{{ $agent->name }}">
         </div>
 
-        <div class="member-info">
+        <!-- Spacer ili malaya (info) ishuke mwisho kabisa -->
+        <div class="mt-auto member-info text-center">
             <h4>{{ $agent->name }}</h4>
-             <span>{{ $agent->phone }}</span>
+            <span>{{ $agent->phone }}</span><br>
+            <span>{{ $agent->email }}</span><br>
+            <p>{{ Str::limit($agent->description, 60) }}</p>
 
-            <div class="social">
+            <div class="social mt-2">
                 <a href="tel:{{ $agent->phone }}">
                     <i class="bi bi-telephone"></i>
                 </a>
@@ -233,46 +172,12 @@
                 </a>
             </div>
         </div>
+
     </div>
 </div>
 @empty
 <p class="text-center">No agents available right now.</p>
 @endforelse
-
-
-
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="member">
-              <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Rent Manager</span>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div> -->
-          <!-- </div>End Team Member -->
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="member">
-              <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Sale manager<br></span>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div> -->
-          <!-- </div>End Team Member -->
 
         </div>
 
@@ -281,131 +186,141 @@
     </section><!-- /Agents Section -->
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section">
+<section id="testimonials" class="testimonials section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Testimonials</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div>
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonials</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 1,
-                  "spaceBetween": 40
-                },
-                "1200": {
-                  "slidesPerView": 3,
-                  "spaceBetween": 1
-                }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                </p>
-                <div class="profile mt-auto">
-                  <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Saul Goodman</h3>
-                  <h4>Ceo &amp; Founder</h4>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                </p>
-                <div class="profile mt-auto">
-                  <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                </p>
-                <div class="profile mt-auto">
-                  <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                  <h3>Jena Karlis</h3>
-                  <h4>Store Owner</h4>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                </p>
-                <div class="profile mt-auto">
-                  <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                  <h3>Matt Brandon</h3>
-                  <h4>Freelancer</h4>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                </p>
-                <div class="profile mt-auto">
-                  <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                  <h3>John Larson</h3>
-                  <h4>Entrepreneur</h4>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <!-- Swiper Slider -->
+    <div class="swiper testimonials-slider" style="max-width: 900px;">
+      <div class="swiper-wrapper">
+        @foreach($testimonials as $item)
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <div class="stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p>{{ $item->message }}</p>
+            <div class="profile mt-auto">
+              @if($item->image)
+                <img src="{{ asset('storage/'.$item->image) }}" class="testimonial-img" alt="{{ $item->name }}">
+              @else
+                <img src="assets/img/testimonials/default.jpg" class="testimonial-img" alt="{{ $item->name }}">
+              @endif
+              <h3>{{ $item->name }}</h3>
+              <h4>{{ $item->position }}</h4>
+            </div>
           </div>
-          <div class="swiper-pagination"></div>
         </div>
-
+        @endforeach
       </div>
 
-    </section><!-- /Testimonials Section -->
+      <!-- Swiper Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".testimonials-slider", {
+    slidesPerView: 1.5,
+    spaceBetween: 20,
+    loop: true,
+    centeredSlides: true,
+    autoplay: {
+      delay: 3000,  // Automatic slide kila 3 sekunde
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    breakpoints: {
+      768: { slidesPerView: 2, spaceBetween: 30 },
+      1200: { slidesPerView: 3, spaceBetween: 40 },
+    },
+    on: {
+      init: function() { updateFadedSlides(this); },
+      slideChange: function() { updateFadedSlides(this); },
+    },
+  });
+
+  function updateFadedSlides(swiper) {
+    swiper.slides.forEach(slide => slide.classList.remove('prev-slide', 'next-slide', 'active-slide'));
+    const activeIndex = swiper.activeIndex;
+    const total = swiper.slides.length;
+
+    const activeSlide = swiper.slides[activeIndex];
+    activeSlide.classList.add('active-slide');
+
+    const prevSlide = swiper.slides[activeIndex - 1 < 0 ? total - 1 : activeIndex - 1];
+    const nextSlide = swiper.slides[activeIndex + 1 >= total ? 0 : activeIndex + 1];
+
+    prevSlide.classList.add('prev-slide');
+    nextSlide.classList.add('next-slide');
+  }
+</script>
+
+
+<!-- Custom CSS -->
+<style>
+  .testimonial-item {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.4s, opacity 0.4s;
+  }
+
+  .testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+  }
+
+  .stars i {
+    color: #ffb400;
+  }
+
+  .swiper-slide {
+    opacity: 0.3;
+    transform: scale(0.85);
+    transition: transform 0.4s, opacity 0.4s;
+  }
+
+  .swiper-slide.active-slide {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .swiper-slide.prev-slide,
+  .swiper-slide.next-slide {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+
+  .swiper {
+    padding-top: 20px;
+    padding-bottom: 30px;
+  }
+</style>
+
+
+
+
 
   </main>
 </body>

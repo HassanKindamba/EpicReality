@@ -4,24 +4,42 @@
 
 @section('content')
 <h1>Edit Home</h1>
-<form action="{{ route('homes.update', $home->id) }}" method="POST" enctype="multipart/form-data">
+
+<form action="{{ route('admin.homes.update', $home->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
+
     <div class="mb-3">
-        <label>Address</label>
-        <input type="text" name="address" class="form-control" value="{{ $home->address }}" required>
+        <label class="form-label">Address</label>
+        <input type="text" name="address" class="form-control" 
+               value="{{ $home->address }}" required>
     </div>
+
     <div class="mb-3">
-        <label>Description</label>
-        <textarea name="description" class="form-control" rows="4" required>{{ $home->description }}</textarea>
+        <label class="form-label">Eneo</label>
+        <input type="text" name="eneo" class="form-control" 
+               value="{{ $home->eneo }}" required>
     </div>
+
     <div class="mb-3">
-        <label>Image</label>
+        <label class="form-label">Jengo</label>
+        <input type="text" name="jengo" class="form-control" 
+               value="{{ $home->jengo }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Change Picha</label>
         <input type="file" name="image" class="form-control">
+
         @if($home->image)
-            <img src="{{ asset('storage/'.$home->image) }}" width="100" class="mt-2">
+            <div class="mt-2">
+                <img src="{{ asset('storage/'.$home->image) }}" 
+                     width="100" 
+                     class="img-thumbnail">
+            </div>
         @endif
     </div>
-    <button class="btn btn-success">Update</button>
+
+    <button class="btn btn-success">Update Home</button>
 </form>
 @endsection

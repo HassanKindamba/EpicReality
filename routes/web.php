@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
@@ -8,78 +9,76 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\AgentDashboardController; // ✅ Controller mpya kwa Agent dashboard
+use App\Http\Middleware\AdminMiddleware;
 
+// --------------------
+// Frontend Routes
+// --------------------
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/services', [FrontendController::class, 'services'])->name('service');
 Route::get('/agents', [FrontendController::class, 'agents'])->name('agent');
 Route::get('/properties', [FrontendController::class, 'properties'])->name('properties');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::post('/contact', [MessageController::class, 'store'])->name('contact.store');
 
+// --------------------
+// Agent Routes (login dashboard & CRUD properties)
+// --------------------
+Route::middleware(['auth','role:Agent'])->prefix('agent')->name('agent.')->group(function() {
+    // Dashboard for Agent (private dashboard)
+    Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
 
-use App\Http\Middleware\AdminMiddleware;
-Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-
-
-    // Homes CRUD
-    Route::get('/admin/homes', [HomeController::class, 'index'])->name('homes.index');
-    Route::get('/admin/homes/create', [HomeController::class, 'create'])->name('homes.create');
-    Route::post('/admin/homes', [HomeController::class, 'store'])->name('homes.store');
-    Route::get('/admin/homes/{home}/edit', [HomeController::class, 'edit'])->name('homes.edit');
-    Route::put('/admin/homes/{home}', [HomeController::class, 'update'])->name('homes.update');
-    Route::delete('/admin/homes/{home}', [HomeController::class, 'destroy'])->name('homes.destroy');
-
-    // Services CRUD
-    Route::get('/admin/services', [ServiceController::class, 'index'])->name('services.index');
-    Route::get('/admin/services/create', [ServiceController::class, 'create'])->name('services.create');
-    Route::post('/admin/services', [ServiceController::class, 'store'])->name('services.store');
-    Route::get('/admin/services/{service}/edit', [ServiceController::class, 'edit'])->name('services.edit');
-    Route::put('/admin/services/{service}', [ServiceController::class, 'update'])->name('services.update');
-    Route::delete('/admin/services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
-
-    // Properties CRUD
-    Route::get('/admin/properties', [PropertyController::class, 'index'])->name('properties.index');
-    Route::get('/admin/properties/create', [PropertyController::class, 'create'])->name('properties.create');
-    Route::post('/admin/properties', [PropertyController::class, 'store'])->name('properties.store');
-    Route::get('/admin/properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit');
-    Route::put('/admin/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
-    Route::delete('/admin/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
-
-    // Agents CRUD
-    Route::get('/admin/agents', [AgentController::class, 'index'])->name('agents.index');
-    Route::get('/admin/agents/create', [AgentController::class, 'create'])->name('agents.create');
-    Route::post('/admin/agents', [AgentController::class, 'store'])->name('agents.store');
-    Route::get('/admin/agents/{agent}/edit', [AgentController::class, 'edit'])->name('agents.edit');
-    Route::put('/admin/agents/{agent}', [AgentController::class, 'update'])->name('agents.update');
-    Route::delete('/admin/agents/{agent}', [AgentController::class, 'destroy'])->name('agents.destroy');
-
-     // Users CRUD
-    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/admin/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/admin/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    // CRUD properties for Agent
+    Route::resource('properties', PropertyController::class);
 });
 
+// --------------------
+// Admin Routes
+// --------------------
+Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
+    // Admin Dashboard
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
+    // CRUD Routes
+    Route::resource('homes', HomeController::class);
+    Route::resource('services', ServiceController::class);
+    Route::resource('properties', PropertyController::class);
+    Route::resource('agents', AgentController::class); // Admin manages agents
+    Route::resource('users', UserController::class);
+    Route::resource('testimonials', TestimonialController::class);
 
+    // Contact
+    Route::get('contact', [ContactController::class,'index'])->name('contact.index');
 
+    // Messages delete
+    Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+});
+
+// --------------------
+// Authenticated Users Routes
+// --------------------
 Route::middleware(['auth'])->group(function () {
+    // Fallback dashboard route if role not used
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        $user = auth()->user();
+        if ($user->role === 'Admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'Agent') {
+            return redirect()->route('agent.dashboard');
+        }
+        return redirect('/'); // fallback
     })->name('dashboard');
-});
 
-
-Route::middleware('auth')->group(function () {
+    // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
 
 require __DIR__.'/auth.php';

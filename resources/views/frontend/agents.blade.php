@@ -25,7 +25,7 @@
           </ol>
         </div>
       </nav>
-    </div><!-- End Page Title -->
+    </div><!-- End Page Title Contents -->
 
     <!-- Agents Section -->
     <section id="agents" class="agents section">
@@ -34,42 +34,11 @@
 
         <div class="row gy-5">
 
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="member">
-              <div class="pic"><img src="assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Executive Officer</span>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div> -->
-          <!-- </div>End Team Member -->
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="member">
-              <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Rent Manager</span>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div> -->
-          <!-- </div>End Team Member -->
-
-
 @forelse($agents as $agent)
 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-    <div class="member">
+    <div class="member d-flex flex-column" style="height: 100%;">
+
+        <!-- Agents photo -->
         <div class="pic">
             <img 
                 src="{{ $agent->photo ? asset('storage/' . $agent->photo) : asset('assets/img/team/default.jpg') }}" 
@@ -77,11 +46,14 @@
                 alt="{{ $agent->name }}">
         </div>
 
-        <div class="member-info">
+        <!-- Spacer ili ya (info) ishuke mwisho kabisa -->
+        <div class="mt-auto member-info text-center">
             <h4>{{ $agent->name }}</h4>
-             <span>{{ $agent->phone }}</span>
+            <span>{{ $agent->phone }}</span><br>
+            <span>{{ $agent->email }}</span><br>
+            <p>{{ Str::limit($agent->description, 60) }}</p>
 
-            <div class="social">
+            <div class="social mt-2">
                 <a href="tel:{{ $agent->phone }}">
                     <i class="bi bi-telephone"></i>
                 </a>
@@ -91,37 +63,18 @@
                 </a>
             </div>
         </div>
+
     </div>
 </div>
 @empty
 <p class="text-center">No agents available right now.</p>
 @endforelse
 
-
-
-
-
-          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="member">
-              <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Sale manager<br></span>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div> -->
-          <!-- </div>End Team Member -->
-
         </div>
 
       </div>
 
-    </section><!-- /Agents Section -->
+    </section><!-- /End of Agents Section -->
 
   </main>
 @endsection

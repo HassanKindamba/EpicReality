@@ -1,9 +1,10 @@
 <x-guest-layout>
     <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 px-4">
         <div class="bg-white shadow-2xl rounded-3xl p-8 sm:p-10 w-full max-w-md">
-            
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
-                Login to EpicReality
+
+            <!-- Styled Heading -->
+            <h2 class="text-3xl font-bold text-center mb-6">
+                <span class="text-green-500">Epic</span><span class="text-gray-800">Reality</span>
             </h2>
 
             <!-- Display validation errors -->

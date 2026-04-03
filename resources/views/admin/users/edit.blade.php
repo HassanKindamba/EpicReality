@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>Edit User</h2>
 
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+    <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
 

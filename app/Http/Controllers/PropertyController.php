@@ -4,62 +4,99 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
+    // public function __construct()
+    // {
+    //     // Only agents can access this controller
+    //     $this->middleware(['auth','role:agent']);
+    // }
+
+    // List properties owned by logged-in agent
     public function index()
     {
-        $properties = Property::all();
+        $properties = Property::where('user_id', Auth::id())->get();
         return view('admin.properties.index', compact('properties'));
     }
 
+    // Show create form
     public function create()
     {
-        return view('admin.properties.create');
+        return view('agent.properties.create');
     }
 
+    // Store new property
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required',
-            'price' => 'required|numeric',
+            'link'  => 'required|string|max:255',
             'image' => 'nullable|image',
         ]);
 
+        $property = new Property();
+        $property->title = $request->title;
+        $property->link  = $request->link;
+        $property->user_id = Auth::id(); // assign agent as owner
+
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('properties', 'public');
+            $property->image = $request->file('image')->store('properties', 'public');
         }
 
-        Property::create($data);
-        return redirect()->route('properties.index')->with('success', 'Property added successfully!');
+        $property->save();
+
+        return redirect()->route('agent.properties.index')
+            ->with('success', 'Property added successfully!');
     }
 
+    // Show edit form
     public function edit(Property $property)
     {
-        return view('admin.properties.edit', compact('property'));
+        if ($property->user_id != Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('agent.properties.edit', compact('property'));
     }
 
+    // Update property
     public function update(Request $request, Property $property)
     {
-        $data = $request->validate([
+        if ($property->user_id != Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required',
-            'price' => 'required|numeric',
+            'link'  => 'required|string|max:255',
             'image' => 'nullable|image',
         ]);
 
+        $property->title = $request->title;
+        $property->link  = $request->link;
+
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('properties', 'public');
+            $property->image = $request->file('image')->store('properties', 'public');
         }
 
-        $property->update($data);
-        return redirect()->route('properties.index')->with('success', 'Property updated successfully!');
+        $property->save();
+
+        return redirect()->route('agent.properties.index')
+            ->with('success', 'Property updated successfully!');
     }
 
+    // Delete property
     public function destroy(Property $property)
     {
+        if ($property->user_id != Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
         $property->delete();
-        return redirect()->route('properties.index')->with('success', 'Property deleted successfully!');
+
+        return redirect()->route('agent.properties.index')
+            ->with('success', 'Property deleted successfully!');
     }
 }
