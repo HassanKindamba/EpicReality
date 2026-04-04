@@ -39,6 +39,10 @@
             </td>
             <td>
                 <a href="{{ route('admin.services.edit', $service->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('admin.services.show', $service->id) }}" 
+                    class="btn btn-info btn-sm">
+                    View
+                </a>   
                 <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" class="d-inline-block">
                     @csrf
                     @method('DELETE')

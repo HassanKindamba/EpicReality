@@ -45,6 +45,11 @@
                    Edit
                 </a>
 
+                <a href="{{ route('admin.homes.show', $home->id) }}" 
+                    class="btn btn-info btn-sm">
+                View
+                </a>
+
                 <form action="{{ route('admin.homes.destroy', $home->id) }}" 
                       method="POST" 
                       class="d-inline-block">

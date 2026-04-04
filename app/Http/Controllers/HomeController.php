@@ -49,6 +49,12 @@ class HomeController extends Controller
         return view('admin.homes.edit', compact('home'));
     }
 
+    public function show($id)
+    {
+        $home = Home::findOrFail($id);
+        return view('admin.homes.show', compact('home'));
+    }
+
     public function update(Request $request, Home $home)
     {
         $request->validate([

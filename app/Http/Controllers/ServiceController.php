@@ -51,6 +51,12 @@ class ServiceController extends Controller
         return view('admin.services.edit', compact('service'));
     }
 
+    public function show($id)
+    {
+        $service = Service::findOrFail($id);
+        return view('admin.services.show', compact('service'));
+    }
+
     public function update(Request $request, Service $service)
     {
         $request->validate([

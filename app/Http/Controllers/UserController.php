@@ -47,6 +47,12 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.users.show', compact('user'));
+    }
+
     // Update an existing user
     public function update(Request $request, User $user)
     {
