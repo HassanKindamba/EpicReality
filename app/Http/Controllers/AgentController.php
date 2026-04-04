@@ -51,6 +51,12 @@ class AgentController extends Controller
         return view('admin.agents.edit', compact('agent'));
     }
 
+    public function show($id)
+    {
+        $agent = Agent::findOrFail($id);
+        return view('admin.agents.show', compact('agent'));
+    }
+
     public function update(Request $request, Agent $agent)
 {
     $request->validate([

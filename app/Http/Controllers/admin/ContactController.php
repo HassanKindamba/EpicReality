@@ -13,6 +13,12 @@ class ContactController extends Controller
         $messages = Message::latest()->get();
         return view('admin.contact.index', compact('messages'));
     }
+
+    public function show($id)
+    {
+        $msg = \App\Models\Message::findOrFail($id);
+        return view('admin.contact.show', compact('msg'));
+    }
 }
 
 

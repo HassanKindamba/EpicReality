@@ -31,6 +31,10 @@
             </td>
             <td>
                 <a href="{{ route('admin.agents.edit', $agent->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('admin.agents.show', $agent->id) }}" 
+                    class="btn btn-info btn-sm">
+                    View
+                </a>
                 <form action="{{ route('admin.agents.destroy', $agent->id) }}" method="POST" class="d-inline-block">
                     @csrf
                     @method('DELETE')

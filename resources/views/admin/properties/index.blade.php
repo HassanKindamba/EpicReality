@@ -31,6 +31,10 @@
             </td>
             <td>
                 <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('admin.properties.show', $property->id) }}" 
+                    class="btn btn-info btn-sm">
+                    View
+                </a>
                 <form action="{{ route('admin.properties.destroy', $property->id) }}" method="POST" class="d-inline-block">
                     @csrf
                     @method('DELETE')

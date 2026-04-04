@@ -28,18 +28,18 @@ Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact', [MessageController::class, 'store'])->name('contact.store');
 
 // --------------------
-// Agent Routes (login dashboard & CRUD properties)
+// Admin Routes (Agent Dashboard & CRUD properties)
 // --------------------
-Route::middleware(['auth','role:Agent'])->prefix('agent')->name('agent.')->group(function() {
-    // Dashboard for Agent (private dashboard)
+Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function() {
+    // Dashboard for admin (private dashboard)
     Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
 
-    // CRUD properties for Agent
+    // CRUD properties for admin
     Route::resource('properties', PropertyController::class);
 });
 
 // --------------------
-// Admin Routes
+// Admin Routes (Full Admin)
 // --------------------
 Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard
@@ -53,10 +53,9 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
     Route::resource('users', UserController::class);
     Route::resource('testimonials', TestimonialController::class);
 
-    // Contact
-    Route::get('contact', [ContactController::class,'index'])->name('contact.index');
-
-    // Messages delete
+    // Contact / Messages
+    Route::get('contact', [ContactController::class,'index'])->name('contact.index'); // list all messages
+    Route::get('messages/{message}', [ContactController::class,'show'])->name('messages.show'); // view single message
     Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 });
 

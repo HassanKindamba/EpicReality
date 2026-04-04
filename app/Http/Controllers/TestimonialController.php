@@ -45,6 +45,12 @@ class TestimonialController extends Controller
         return view('admin.testimonials.edit', compact('testimonial'));
     }
 
+    public function show($id)
+    {
+        $testimonial = Testimonial::findOrFail($id);
+        return view('admin.testimonials.show', compact('testimonial'));
+    }
+
     public function update(Request $request, Testimonial $testimonial)
     {
         $request->validate([

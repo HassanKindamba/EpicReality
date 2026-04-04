@@ -28,6 +28,10 @@
                 <td>{{ $user->is_admin ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ route('admin.users.show', $user->id) }}" 
+                    class="btn btn-info btn-sm">
+                    View
+                    </a>
                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')

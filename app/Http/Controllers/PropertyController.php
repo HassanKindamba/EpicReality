@@ -24,7 +24,7 @@ class PropertyController extends Controller
     // Show create form
     public function create()
     {
-        return view('agent.properties.create');
+        return view('admin.properties.create');
     }
 
     // Store new property
@@ -47,7 +47,7 @@ class PropertyController extends Controller
 
         $property->save();
 
-        return redirect()->route('agent.properties.index')
+        return redirect()->route('admin.properties.index')
             ->with('success', 'Property added successfully!');
     }
 
@@ -58,7 +58,13 @@ class PropertyController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        return view('agent.properties.edit', compact('property'));
+        return view('admin.properties.edit', compact('property'));
+    }
+
+    public function show($id)
+    {
+        $property = Property::findOrFail($id);
+        return view('admin.properties.show', compact('property'));
     }
 
     // Update property
@@ -83,7 +89,7 @@ class PropertyController extends Controller
 
         $property->save();
 
-        return redirect()->route('agent.properties.index')
+        return redirect()->route('admin.properties.index')
             ->with('success', 'Property updated successfully!');
     }
 
@@ -96,7 +102,7 @@ class PropertyController extends Controller
 
         $property->delete();
 
-        return redirect()->route('agent.properties.index')
+        return redirect()->route('admin.properties.index')
             ->with('success', 'Property deleted successfully!');
     }
 }

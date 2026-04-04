@@ -31,6 +31,10 @@
             <td>{{ $msg->message }}</td>
             <td>{{ $msg->created_at->format('d M Y H:i') }}</td>
             <td>
+                <a href="{{ route('admin.messages.show', $msg->id) }}" 
+                    class="btn btn-info btn-sm">
+                    View
+                </a>
                 <form action="{{ route('admin.messages.destroy', $msg->id) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this message?')">
                     @csrf
                     @method('DELETE')
