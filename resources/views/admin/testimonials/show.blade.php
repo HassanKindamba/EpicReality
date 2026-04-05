@@ -11,11 +11,11 @@
             <p><strong>Message:</strong> {{ $testimonial->message }}</p>
             <p><strong>Position:</strong> {{ $testimonial->position }}</p>
 
-            @if($testimonial->photo)
             <p><strong>Photo:</strong></p>
-            <img src="{{ asset('storage/' . $testimonial->photo) }}" 
-                 style="max-width:200px; max-height:200px; object-fit:cover;" 
-                 class="rounded shadow">
+            @if ($testimonial->image)
+                <img src="{{ asset('storage/' . $testimonial->image) }}" 
+                    style="max-width:200px; max-height:200px; object-fit:cover;" 
+                    class="rounded shadow">
             @endif
 
         </div>
