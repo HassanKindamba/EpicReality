@@ -39,11 +39,8 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Relationship with Role model
-     */
-    public function role()
+    public function properties()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(Property::class);
     }
 }

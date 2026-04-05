@@ -57,12 +57,12 @@ class TestimonialController extends Controller
             'name' => 'required',
             'position' => 'required',
             'message' => 'required',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+            'photo' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
         $data = $request->all();
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('photo')) {
             $image = $request->file('image')->store('testimonials', 'public');
             $data['image'] = $image;
         }

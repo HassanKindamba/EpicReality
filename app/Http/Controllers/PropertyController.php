@@ -32,14 +32,24 @@ class PropertyController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'link'  => 'required|string|max:255',
-            'image' => 'nullable|image',
+            'link'  => 'required|url|max:255',
+            'description' => 'nullable|string',
+            'availability_status' => 'required|in:Available,Occupied,Not In Use',
+            'property_type' => 'required|in:Apartment,House,Commercial',
+            'visibility_status' => 'required|in:Visible,Hidden',
+            'price' => 'required|numeric',
+            'image' => 'nullable|image|max:2048',
         ]);
 
         $property = new Property();
         $property->title = $request->title;
-        $property->link  = $request->link;
-        $property->user_id = Auth::id(); // assign agent as owner
+        $property->link = $request->link;
+        $property->description = $request->description;
+        $property->availability_status = $request->availability_status;
+        $property->property_type = $request->property_type;
+        $property->visibility_status = $request->visibility_status;
+        $property->price = $request->price;
+        $property->user_id = Auth::id();
 
         if ($request->hasFile('image')) {
             $property->image = $request->file('image')->store('properties', 'public');
@@ -48,9 +58,8 @@ class PropertyController extends Controller
         $property->save();
 
         return redirect()->route('admin.properties.index')
-            ->with('success', 'Property added successfully!');
+                        ->with('success', 'Property added successfully!');
     }
-
     // Show edit form
     public function edit(Property $property)
     {
@@ -69,29 +78,39 @@ class PropertyController extends Controller
 
     // Update property
     public function update(Request $request, Property $property)
-    {
-        if ($property->user_id != Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'link'  => 'required|string|max:255',
-            'image' => 'nullable|image',
-        ]);
-
-        $property->title = $request->title;
-        $property->link  = $request->link;
-
-        if ($request->hasFile('image')) {
-            $property->image = $request->file('image')->store('properties', 'public');
-        }
-
-        $property->save();
-
-        return redirect()->route('admin.properties.index')
-            ->with('success', 'Property updated successfully!');
+{
+    if ($property->user_id != Auth::id()) {
+        abort(403, 'Unauthorized');
     }
+
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'link'  => 'required|url|max:255',
+        'description' => 'nullable|string',
+        'availability_status' => 'required|in:Available,Occupied,Not In Use',
+        'property_type' => 'required|in:Apartment,House,Commercial',
+        'visibility_status' => 'required|in:Visible,Hidden',
+        'price' => 'required|numeric',
+        'image' => 'nullable|image|max:2048',
+    ]);
+
+    $property->title = $request->title;
+    $property->link = $request->link;
+    $property->description = $request->description;
+    $property->availability_status = $request->availability_status;
+    $property->property_type = $request->property_type;
+    $property->visibility_status = $request->visibility_status;
+    $property->price = $request->price;
+
+    if ($request->hasFile('image')) {
+        $property->image = $request->file('image')->store('properties', 'public');
+    }
+
+    $property->save();
+
+    return redirect()->route('admin.properties.index')
+                     ->with('success', 'Property updated successfully!');
+}
 
     // Delete property
     public function destroy(Property $property)

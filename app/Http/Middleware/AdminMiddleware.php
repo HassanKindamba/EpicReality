@@ -10,10 +10,11 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
-    return $next($request);
-}
+        // Hii inachunguza case-insensitive role
+        if (Auth::check() && strtolower(Auth::user()->role) === 'admin') {
+            return $next($request);
+        }
 
-abort(403, 'Unauthorized');
+        abort(403, 'Unauthorized');
     }
 }
