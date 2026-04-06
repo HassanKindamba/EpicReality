@@ -45,9 +45,21 @@
 
       {{-- Overlay with info --}}
       <div class="property-overlay">
-        <h3>
-          <a href="#" class="stretched-link">{{ $property->title }}</a>
-        </h3>
+          <h3>
+            <a href="#" class="stretched-link">{{ $property->title }}</a>
+          </h3>
+
+      {{-- Description --}}
+        <p class="mb-1 small">
+          {{ Str::limit($property->description, 60) }}
+        </p>
+
+      {{-- Property Meta --}}
+        <div class="property-meta">
+          <span><b>Type:</b> {{ $property->property_type }}</span><br>
+          <span><b>Status:</b> {{ $property->availability_status }}</span><br>
+          <span><b>Price:</b> ${{ number_format($property->price) }}</span>
+        </div>
 
         {{-- Static property details --}}
         <div class="property-info d-flex justify-content-between">

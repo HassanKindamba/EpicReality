@@ -40,13 +40,13 @@
         </select>
     </div>
 
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <label>Visibility Status</label>
         <select name="visibility_status" class="form-select">
             <option value="Visible">Visible</option>
             <option value="Hidden" selected>Hidden</option>
         </select>
-    </div>
+    </div> -->
 
     <div class="mb-3">
         <label>Price ($)</label>
