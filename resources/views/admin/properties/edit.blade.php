@@ -47,13 +47,13 @@
         </select>
     </div>
 
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <label>Visibility Status</label>
         <select name="visibility_status" class="form-select">
             <option value="Visible" {{ $property->visibility_status == 'Visible' ? 'selected' : '' }}>Visible</option>
             <option value="Hidden" {{ $property->visibility_status == 'Hidden' ? 'selected' : '' }}>Hidden</option>
         </select>
-    </div>
+    </div> -->
 
     <div class="mb-3">
         <label>Price ($)</label>

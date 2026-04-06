@@ -45,9 +45,9 @@
                         <li class="list-group-item">
                             👁 Visibility: {{ $property->visibility_status }}
                         </li>
-                        @if(isset($property->bedrooms))
+                        @if($property->bedrooms->count())
                         <li class="list-group-item">
-                            🛏 Bedrooms: {{ $property->bedrooms }}
+                            🛏 Bedrooms: {{ $property->bedrooms->count() }}
                         </li>
                         @endif
                         @if(isset($property->bathrooms))
@@ -85,5 +85,35 @@
     </div>
     @endif
 
+    <!-- Bedrooms List -->
+<div class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold">Bedrooms</h4>
+        <a href="{{ route('admin.bedroom.create', $property->id) }}" class="btn btn-primary btn-sm">Add Bedroom</a>
+    </div>
+
+    @if($property->bedrooms->count())
+        <div class="row">
+            @foreach($property->bedrooms as $bedroom)
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $bedroom->name }}</h5>
+                            <p class="mb-1">Size: {{ $bedroom->size }} sqm</p>
+                            <p class="mb-1">No of Doors: {{ $bedroom->no_of_doors }}</p>
+                            <p class="mb-1">No of Windows: {{ $bedroom->no_of_windows }}</p>
+                            <p class="mb-1">Area: {{ $bedroom->area }} sqm</p>
+                            <p class="mb-1">Price: {{ number_format($bedroom->price, 2) }} TZS</p>
+                            @if($bedroom->image)
+                                <img src="{{ asset('storage/' . $bedroom->image) }}" class="img-fluid mt-2 rounded">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p class="text-muted">No bedrooms added yet.</p>
+    @endif
 </div>
 @endsection

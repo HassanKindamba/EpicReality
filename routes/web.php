@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\BedroomController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestimonialController;
-use App\Http\Controllers\AgentDashboardController; // ✅ Controller mpya kwa Agent dashboard
+use App\Http\Controllers\AgentDashboardController;
 use App\Http\Middleware\AdminMiddleware;
 
 // --------------------
@@ -49,13 +50,22 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
     Route::resource('homes', HomeController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('properties', PropertyController::class);
-    Route::resource('agents', AgentController::class); // Admin manages agents
+    Route::resource('agents', AgentController::class);
     Route::resource('users', UserController::class);
     Route::resource('testimonials', TestimonialController::class);
 
+    // -----------------------------
+    // Bedroom Routes
+    // -----------------------------
+    // Create bedroom form
+    Route::get('/bedroom/create/{property_id}', [BedroomController::class, 'create'])->name('bedroom.create');
+
+    // Store bedroom
+    Route::post('/bedroom/store', [BedroomController::class, 'store'])->name('bedroom.store');
+
     // Contact / Messages
-    Route::get('contact', [ContactController::class,'index'])->name('contact.index'); // list all messages
-    Route::get('messages/{message}', [ContactController::class,'show'])->name('messages.show'); // view single message
+    Route::get('contact', [ContactController::class,'index'])->name('contact.index');
+    Route::get('messages/{message}', [ContactController::class,'show'])->name('messages.show');
     Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 });
 
@@ -63,7 +73,6 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
 // Authenticated Users Routes
 // --------------------
 Route::middleware(['auth'])->group(function () {
-    // Fallback dashboard route if role not used
     Route::get('/dashboard', function () {
         $user = auth()->user();
         if ($user->role === 'Admin') {
@@ -71,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
         } elseif ($user->role === 'Agent') {
             return redirect()->route('agent.dashboard');
         }
-        return redirect('/'); // fallback
+        return redirect('/');
     })->name('dashboard');
 
     // Profile routes

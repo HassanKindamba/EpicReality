@@ -22,4 +22,10 @@ class Property extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+     // Hii ndio method ya bedrooms
+    public function bedrooms()
+    {
+        return $this->hasMany(Bedroom::class);
+    }
 }
