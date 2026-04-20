@@ -8,14 +8,14 @@ use App\Models\Property;
 
 class BedroomController extends Controller
 {
-    // Display the create bedroom form
+    // Show create form
     public function create($property_id)
     {
         $property = Property::findOrFail($property_id);
         return view('admin.bedrooms.create', compact('property'));
     }
 
-    // Store bedroom data
+    // Store bedroom
     public function store(Request $request)
     {
         $request->validate([
@@ -30,6 +30,7 @@ class BedroomController extends Controller
         ]);
 
         $imagePath = null;
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('bedrooms', 'public');
         }
@@ -46,6 +47,24 @@ class BedroomController extends Controller
         ]);
 
         return redirect()->route('admin.properties.show', $request->property_id)
-                         ->with('success', 'Bedroom added successfully.');
+            ->with('success', 'Bedroom added successfully.');
+    }
+
+    // ❗ DELETE BEDROOM (THIS WAS MISSING)
+    public function destroy($id)
+    {
+        $bedroom = Bedroom::findOrFail($id);
+
+        // delete image kama ipo
+        if ($bedroom->image && \Storage::disk('public')->exists($bedroom->image)) {
+            \Storage::disk('public')->delete($bedroom->image);
+        }
+
+        $property_id = $bedroom->property_id;
+
+        $bedroom->delete();
+
+        return redirect()->route('admin.properties.show', $property_id)
+            ->with('success', 'Bedroom deleted successfully.');
     }
 }

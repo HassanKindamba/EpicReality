@@ -28,4 +28,10 @@ class Property extends Model
     {
         return $this->hasMany(Bedroom::class);
     }
+
+    //Hii ndio method ya bathroom
+    public function bathrooms()
+    {
+        return $this->hasMany(Bathroom::class);
+    }
 }
