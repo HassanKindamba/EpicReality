@@ -5,7 +5,7 @@
 @section('content')
 <h1>Edit Agent</h1>
 
-<form action="{{ route('agents.update', $agent->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.agents.update', $agent->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
