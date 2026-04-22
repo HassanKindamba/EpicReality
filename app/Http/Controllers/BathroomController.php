@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bathroom;
 use App\Models\Property;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class BathroomController extends Controller
@@ -22,7 +23,7 @@ class BathroomController extends Controller
         return view('admin.bathrooms.create', compact('property'));
     }
 
-    // Store bathroom
+    // Store bathroom (UPDATED)
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -35,14 +36,40 @@ class BathroomController extends Controller
             'image' => 'nullable|image',
             'area' => 'nullable',
             'description' => 'nullable',
+
+            // multiple images (optional)
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // upload image
+        // CREATE bathroom first
+        $bathroom = Bathroom::create([
+            'property_id' => $validated['property_id'],
+            'bedroom_id' => $validated['bedroom_id'] ?? null,
+            'number' => $validated['number'],
+            'type' => $validated['type'] ?? null,
+            'shower' => $validated['shower'] ?? null,
+            'doors' => $validated['doors'] ?? null,
+            'area' => $validated['area'] ?? null,
+            'description' => $validated['description'] ?? null,
+        ]);
+
+        // SINGLE IMAGE (main image)
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('bathrooms', 'public');
+            $bathroom->image = $request->file('image')->store('bathrooms', 'public');
+            $bathroom->save();
         }
 
-        Bathroom::create($validated);
+        // MULTIPLE IMAGES (gallery)
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('bathrooms', 'public');
+
+                Image::create([
+                    'bathroom_id' => $bathroom->id,
+                    'path' => $path
+                ]);
+            }
+        }
 
         return redirect()
             ->route('admin.properties.show', $validated['property_id'])
@@ -70,7 +97,7 @@ class BathroomController extends Controller
     // Delete bathroom
     public function destroy($id)
     {
-        Bathroom::destroy($id);
+        Bathroom::findOrFail($id)->delete();
 
         return redirect()->back()->with('success', 'Bathroom deleted successfully!');
     }
