@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Property;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $users = User::count();
+        $properties = Property::count();
+
+        return view('admin.dashboard', compact('users', 'properties'));
     }
 }

@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
-    public function handle(Request $request, Closure $next)
+   public function handle(Request $request, Closure $next)
     {
-        // Hii inachunguza case-insensitive role
-        if (Auth::check() && strtolower(Auth::user()->role) === 'admin') {
+        $user = Auth::user();
+
+        if ($user && $user->role === 'admin') {
             return $next($request);
         }
 
-        abort(403, 'Unauthorized');
+        abort(403);
     }
 }

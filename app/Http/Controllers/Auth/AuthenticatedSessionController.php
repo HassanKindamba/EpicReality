@@ -27,11 +27,16 @@ class AuthenticatedSessionController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Login successful, regenerate session
+
+            // Login successful
             $request->session()->regenerate();
 
-            // Redirect straight to admin dashboard
-            return redirect('/admin/dashboard');
+            // Redirect based on role
+            if (Auth::user()->role == 'admin') {
+                return redirect('/admin/dashboard');
+            }
+
+            return redirect('/agent/dashboard');
         }
 
         // Login failed
