@@ -1,18 +1,3 @@
-<!-- <h1>Agent Dashboard</h1>
-
-<a href="">Add Property</a>
-
-<hr>
-
-@foreach($properties as $property)
-
-    <div>
-        <h3>{{ $property->name }}</h3>
-        <p>{{ $property->price }}</p>
-    </div>
-
-@endforeach -->
-
 @extends('layouts.admin')
 
 @section('content')
@@ -50,7 +35,7 @@
     </div>
 
     {{-- Statistics --}}
-    <div class="row g-4 mb-5">
+    <!-- <div class="row g-4 mb-5">
 
         {{-- Total Properties --}}
         <div class="col-md-4">
@@ -109,10 +94,10 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
 
     {{-- Quick Actions --}}
-    <div class="card border-0 shadow rounded-4 mb-5">
+    <!-- <div class="card border-0 shadow rounded-4 mb-5">
         <div class="card-body p-4">
 
             <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -129,10 +114,10 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     {{-- Property List --}}
-    <div class="card border-0 shadow rounded-4">
+    <!-- <div class="card border-0 shadow rounded-4">
         <div class="card-body p-4">
 
             <h4 class="fw-bold mb-4">
@@ -208,7 +193,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
 </div>
 
