@@ -17,10 +17,8 @@ class PropertyController extends Controller
     // List properties all properties for admin, and only owned properties for agents
     public function index()
     {
-        if (auth()->user()->role == 'agent') {
-            return redirect()->route('admin.properties.agent-index');
-        } 
         $properties = Property::all();
+
         return view('admin.properties.index', compact('properties'));
     }
 
