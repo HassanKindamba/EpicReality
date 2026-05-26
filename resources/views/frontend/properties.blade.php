@@ -46,7 +46,9 @@
       {{-- Overlay with info --}}
       <div class="property-overlay">
           <h3>
-            <a href="#" class="stretched-link">{{ $property->title }}</a>
+            <a href="{{ route('properties.details', $property->id) }}" class="stretched-link">
+                {{ $property->title }}
+            </a>
           </h3>
 
       {{-- Description --}}
