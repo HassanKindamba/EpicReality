@@ -8,7 +8,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <form action="{{ route('admin.bedroom.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.bedrooms.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="property_id" value="{{ $property->id }}">
 

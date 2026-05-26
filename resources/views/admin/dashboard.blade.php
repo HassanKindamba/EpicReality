@@ -41,7 +41,7 @@
     <div class="row g-4">
 
         {{-- Users --}}
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="card border-0 shadow rounded-4 h-100">
                 <div class="card-body text-center p-4">
 
@@ -57,10 +57,10 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
         {{-- Properties --}}
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="card border-0 shadow rounded-4 h-100">
                 <div class="card-body text-center p-4">
 
@@ -76,10 +76,10 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
         {{-- Bedrooms --}}
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="card border-0 shadow rounded-4 h-100">
                 <div class="card-body text-center p-4">
 
@@ -95,12 +95,12 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
     {{-- Quick Actions --}}
-    <div class="card border-0 shadow rounded-4 mt-5">
+    <!-- <div class="card border-0 shadow rounded-4 mt-5">
         <div class="card-body p-4">
 
             <h4 class="fw-bold mb-4">
@@ -126,7 +126,7 @@
 
             </div>
 
-        </div>
+        </div> -->
     </div>
 
 </div>
