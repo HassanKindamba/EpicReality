@@ -57,4 +57,17 @@ class FrontendController extends Controller
     {
         return view('frontend.contact');
     }
+
+
+
+    public function propertyDetails($id)
+    {
+        $property = Property::with([
+            'user',
+            'bedrooms',
+            'bathrooms'
+        ])->findOrFail($id);
+
+        return view('frontend.property-details', compact('property'));
+    }
 }
