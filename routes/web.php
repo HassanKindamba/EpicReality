@@ -10,6 +10,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\BedroomController;
 use App\Http\Controllers\BathroomController;
+use App\Http\Controllers\AgentBedroomController;
+use App\Http\Controllers\AgentBathroomController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\admin\ContactController;
@@ -108,7 +110,6 @@ Route::middleware(['auth', AdminMiddleware::class])
 | AGENT ROUTES
 |--------------------------------------------------------------------------
 */
-
 Route::middleware(['auth'])
     ->prefix('agent')
     ->name('agent.')
@@ -117,11 +118,48 @@ Route::middleware(['auth'])
         Route::get('/dashboard', [AgentDashboardController::class, 'index'])
             ->name('dashboard');
 
-        Route::get('/properties', [\App\Http\Controllers\AgentPropertyController::class, 'index'])
+        Route::get('/properties', [AgentPropertyController::class, 'index'])
             ->name('properties.index');
-    });
 
+        Route::get('/properties/create', [AgentPropertyController::class, 'create'])
+            ->name('properties.create');
+
+        Route::post('/properties', [AgentPropertyController::class, 'store'])
+            ->name('properties.store');
+
+        Route::get('/properties/{id}/edit', [AgentPropertyController::class, 'edit'])
+            ->name('properties.edit');
+
+        Route::get('/properties/{id}', [AgentPropertyController::class, 'show'])
+            ->name('properties.show');
+
+        Route::put('/properties/{id}', [AgentPropertyController::class, 'update'])
+            ->name('properties.update');
+
+        Route::delete('/properties/{id}', [AgentPropertyController::class, 'destroy'])
+            ->name('properties.destroy');
+
+        Route::get('/properties/{property}/bedrooms/create', [AgentBedroomController::class, 'create'])
+            ->name('bedrooms.create');
+
+        Route::post('/properties/{property}/bedrooms', [AgentBedroomController::class, 'store'])
+            ->name('bedrooms.store');
+
+        Route::delete('/bedrooms/{id}', [AgentBedroomController::class, 'destroy'])
+            ->name('bedrooms.destroy');
+
+            
+        Route::get('/properties/{property}/bathrooms/create', [AgentBathroomController::class, 'create'])
+            ->name('bathrooms.create');
+
+        Route::post('/properties/{property}/bathrooms', [AgentBathroomController::class, 'store'])
+            ->name('bathrooms.store');
+
+        Route::delete('/bathrooms/{id}', [AgentBathroomController::class, 'destroy'])
+            ->name('bathrooms.destroy');
+    });
 /*
+
 |--------------------------------------------------------------------------
 | AUTH / PROTECTED ROUTES
 |--------------------------------------------------------------------------

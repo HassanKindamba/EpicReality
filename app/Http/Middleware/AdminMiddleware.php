@@ -12,10 +12,10 @@ class AdminMiddleware
     {
         $user = Auth::user();
 
-        if ($user && $user->role === 'admin') {
-            return $next($request);
+        if (!$user || $user->role !== 'admin') {
+            abort(403);
         }
 
-        abort(403);
+        return $next($request);
     }
 }
