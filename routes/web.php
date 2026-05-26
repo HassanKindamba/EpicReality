@@ -41,6 +41,15 @@ Route::post('/contact', [MessageController::class, 'store'])->name('contact.stor
 
 /*
 |--------------------------------------------------------------------------
+| PROPERTY DETAILS (FRONTEND)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/properties/{id}/details', [FrontendController::class, 'propertyDetails'])
+    ->name('properties.details');
+
+/*
+|--------------------------------------------------------------------------
 | ADMIN ROUTES
 |--------------------------------------------------------------------------
 */
