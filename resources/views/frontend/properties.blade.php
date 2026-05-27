@@ -1,136 +1,337 @@
 @extends('layouts.frontend')
 
-@section('title','Properties-Epicreality')
+@section('title','Properties-EpicReality')
 
 @section('content')
-  <main class="main">
 
-    <!-- Page Title -->
+<main class="main">
+
+    <!-- PAGE TITLE -->
     <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1>Properties</h1>
-              <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+
+        <div class="heading">
+            <div class="container">
+
+                <div class="row justify-content-center text-center">
+
+                    <div class="col-lg-8">
+
+                        <h1 class="fw-bold">Properties</h1>
+
+                        <p class="mb-0 text-muted">
+                            Discover amazing modern properties with beautiful bedrooms,
+                            bathrooms and premium living spaces.
+                        </p>
+
+                    </div>
+
+                </div>
+
             </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="{{ url('/') }}" class="active">Home</a></li>
-            <li class="current">Properties</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
-
-
-  <div class="row">
-  @foreach($properties as $property)
-  <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-up">
-    <div class="property-card">
-      {{-- Property Image --}}
-      @if($property->image)
-        <img src="{{ asset('storage/'.$property->image) }}" 
-             alt="{{ $property->title }}" 
-             class="property-img">
-      @else
-        <img src="assets/img/properties/property-4.jpg" 
-             alt="{{ $property->title }}" 
-             class="property-img">
-      @endif
-
-      {{-- Overlay with info --}}
-      <div class="property-overlay">
-          <h3>
-            <a href="{{ route('properties.details', $property->id) }}" class="stretched-link">
-                {{ $property->title }}
-            </a>
-          </h3>
-
-      {{-- Description --}}
-        <p class="mb-1 small">
-          {{ Str::limit($property->description, 60) }}
-        </p>
-
-      {{-- Property Meta --}}
-        <div class="property-meta">
-          <span><b>Type:</b> {{ $property->property_type }}</span><br>
-          <span><b>Status:</b> {{ $property->availability_status }}</span><br>
-          <span><b>Price:</b> ${{ number_format($property->price) }}</span>
         </div>
 
-        {{-- Static property details --}}
-        <div class="property-info d-flex justify-content-between">
-          <div>Area</div>
-          <div>Beds</div>
-          <div>Baths</div>
-          <div>Garages</div>
-        </div>
-        <div class="property-info d-flex justify-content-between">
-          <div>350</div>
-          <div>4</div>
-          <div>5</div>
-          <div>1</div>
-        </div>
-      </div>
+        <!-- BREADCRUMBS -->
+        <nav class="breadcrumbs">
+
+            <div class="container">
+
+                <ol>
+                    <li>
+                        <a href="{{ url('/') }}" class="active">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="current">
+                        Properties
+                    </li>
+                </ol>
+
+            </div>
+
+        </nav>
+
     </div>
-  </div>
-  @endforeach
-</div>
+    <!-- END PAGE TITLE -->
 
+
+    <!-- PROPERTIES -->
+    <section class="py-5">
+
+        <div class="container">
+
+            <div class="row g-4">
+
+                @forelse($properties as $property)
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="property-card h-100">
+
+                            <!-- IMAGE -->
+                            <div class="property-image-wrapper">
+
+                                @if($property->image)
+
+                                    <img src="{{ asset('storage/'.$property->image) }}"
+                                         alt="{{ $property->title }}"
+                                         class="property-img">
+
+                                @else
+
+                                    <img src="{{ asset('assets/img/properties/property-1.jpg') }}"
+                                         alt="{{ $property->title }}"
+                                         class="property-img">
+
+                                @endif
+
+                                <!-- STATUS BADGE -->
+                                <div class="property-badge">
+                                    {{ $property->availability_status }}
+                                </div>
+
+                            </div>
+
+                            <!-- CONTENT -->
+                            <div class="property-content">
+
+                                <h3 class="property-title">
+
+                                    <a href="{{ route('properties.details', $property->id) }}">
+                                        {{ $property->title }}
+                                    </a>
+
+                                </h3>
+
+                                <!-- LOCATION -->
+                                <p class="property-location">
+                                    📍 {{ $property->location }}
+                                </p>
+
+                                <!-- DESCRIPTION -->
+                                <p class="property-description">
+                                    {{ Str::limit($property->description, 90) }}
+                                </p>
+
+                                <!-- PRICE -->
+                                <div class="property-price">
+
+                                    TZS {{ number_format($property->price) }}
+
+                                </div>
+
+                                <!-- META -->
+                                <div class="property-meta">
+
+                                    <div class="meta-item">
+                                        🏠 {{ $property->property_type }}
+                                    </div>
+
+                                    <div class="meta-item">
+                                        🛏 {{ $property->bedrooms->count() }}
+                                    </div>
+
+                                    <div class="meta-item">
+                                        🛁 {{ $property->bathrooms->count() }}
+                                    </div>
+
+                                </div>
+
+                                <!-- BUTTON -->
+                                <a href="{{ route('properties.details', $property->id) }}"
+                                   class="view-btn">
+
+                                    View Details
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                @empty
+
+                    <div class="col-12 text-center">
+
+                        <div class="py-5">
+
+                            <h3>No Properties Found</h3>
+
+                            <p class="text-muted">
+                                Properties will appear here soon.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                @endforelse
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FULL PAGE CSS -->
 <style>
-.property-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+
+/* PAGE */
+.page-title{
+    background: #f8f9fa;
+    padding-top: 40px;
 }
 
-.property-card:hover {
-  transform: translateY(-5px);
+.heading h1{
+    font-size: 42px;
+    font-weight: 700;
 }
 
-.property-img {
-  width: 100%;
-  height: 380px; /* Ongeza kidogo kutoka 350px -> 380px */
-  object-fit: cover;
-  display: block;
+.heading p{
+    font-size: 16px;
 }
 
-/* Gradient overlay at bottom */
-.property-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px;
-  /* Overlay kubwa, inakaa chini kabisa na inapanda juu zaidi */
-  background: linear-gradient(to top, rgba(0, 5, 9, 0.9) 0%, rgba(0, 102, 204, 0) 300%);
-  color: #fff;
+/* PROPERTY CARD */
+.property-card{
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    height: 100%;
 }
 
-
-
-.property-overlay h3 {
-  margin: 5px 0 10px;
-  font-size: 1.1rem;      /* Punguza font-size kidogo */
-  font-weight: 400;       /* Punguza unene kidogo (normal) */
+.property-card:hover{
+    transform: translateY(-8px);
 }
 
-.property-info {
-  font-size: 0.8rem;      /* Punguza font-size kidogo */
-  margin-top: 8px;
-  font-weight: 400;       /* Punguza unene kidogo */
+/* IMAGE */
+.property-image-wrapper{
+    position: relative;
+    overflow: hidden;
 }
 
-.property-info div {
-  flex: 1;
-  text-align: center;
+.property-img{
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    transition: 0.4s ease;
 }
+
+.property-card:hover .property-img{
+    transform: scale(1.05);
+}
+
+/* BADGE */
+.property-badge{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #198754;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* CONTENT */
+.property-content{
+    padding: 22px;
+}
+
+.property-title{
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.property-title a{
+    color: #111;
+    text-decoration: none;
+}
+
+.property-title a:hover{
+    color: #198754;
+}
+
+/* LOCATION */
+.property-location{
+    color: #777;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+/* DESCRIPTION */
+.property-description{
+    color: #555;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* PRICE */
+.property-price{
+    font-size: 24px;
+    font-weight: 700;
+    color: #198754;
+    margin-bottom: 20px;
+}
+
+/* META */
+.property-meta{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.meta-item{
+    background: #f5f5f5;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    text-align: center;
+    flex: 1;
+}
+
+/* BUTTON */
+.view-btn{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background: #198754;
+    color: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.view-btn:hover{
+    background: #146c43;
+    color: #fff;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+    .property-img{
+        height: 220px;
+    }
+
+    .property-title{
+        font-size: 20px;
+    }
+
+}
+
 </style>
 
+@endsection
