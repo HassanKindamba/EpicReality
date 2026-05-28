@@ -55,6 +55,11 @@
     </div>
 
     <div class="mb-3">
+    <label>Location</label>
+    <input type="text" name="location" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
         <label>Image</label>
         <input type="file" name="image" class="form-control" accept="image/*">
     </div>
