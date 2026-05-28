@@ -39,12 +39,16 @@ class AgentPropertyController extends Controller
         ]);
 
         Property::create([
-            'title' => $request->title,
-            'price' => $request->price,
-            'location' => $request->location,
-            'description' => $request->description,
-            'user_id' => Auth::id(), // IMPORTANT: assign to agent
-        ]);
+    'title' => $request->title,
+    'price' => $request->price,
+    'location' => $request->location,
+    'description' => $request->description,
+    'link' => $request->link,
+    'availability_status' => $request->availability_status,
+    'property_type' => $request->property_type,
+    'visibility_status' => 'Hidden',
+    'user_id' => Auth::id(),
+]);
 
         return redirect()->route('agent.properties.index')
             ->with('success', 'Property created successfully');
@@ -72,29 +76,44 @@ class AgentPropertyController extends Controller
     /**
      * Update property (ONLY OWN PROPERTY)
      */
-    public function update(Request $request, $id)
-    {
-        $property = Property::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+public function update(Request $request, $id)
+{
+    $property = Property::where('id', $id)
+        ->where('user_id', Auth::id())
+        ->firstOrFail();
 
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'price' => 'required',
-            'location' => 'required|string',
-            'description' => 'nullable|string',
-        ]);
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'price' => 'required',
+        'location' => 'required|string',
+        'description' => 'nullable|string',
+        'link' => 'nullable|string',
+        'availability_status' => 'required',
+        'property_type' => 'required',
+    ]);
 
-        $property->update([
-            'title' => $request->title,
-            'price' => $request->price,
-            'location' => $request->location,
-            'description' => $request->description,
-        ]);
+    // 👇 FORCE ASSIGN (more reliable kuliko mass update)
+    $property->title = $request->title;
+    $property->price = $request->price;
+    $property->location = $request->location;
+    $property->description = $request->description;
+    $property->link = $request->link;
+    $property->availability_status = $request->availability_status;
+    $property->property_type = $request->property_type;
 
-        return redirect()->route('agent.properties.index')
-            ->with('success', 'Property updated successfully');
+    // keep old visibility
+    $property->visibility_status = $property->visibility_status;
+
+    // image upload
+    if ($request->hasFile('image')) {
+        $property->image = $request->file('image')->store('properties', 'public');
     }
+
+    $property->save();
+
+    return redirect()->route('agent.properties.index')
+        ->with('success', 'Property updated successfully');
+}
 
     /**
      * Delete property (ONLY OWN PROPERTY)
