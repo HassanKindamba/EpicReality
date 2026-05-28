@@ -8,7 +8,9 @@
         <h2 class="fw-bold">{{ $property->title }}</h2>
 
         <p class="text-muted">
-            <i class="bi bi-geo-alt"></i> {{ $property->location ?? 'Location not specified' }}
+            <i class="bi bi-geo-alt"></i>
+            <strong>Location:</strong> {{ $property->location_status }}
+            <td>{{ $property->location ?? 'Not specified' }}</td>
         </p>
 
         <p class="text-muted">
@@ -22,6 +24,7 @@
     </div>
 
     <div class="row">
+
         <!-- Property Image -->
         <div class="col-md-7">
             <img src="{{ $property->image ? asset('storage/'.$property->image) : 'https://via.placeholder.com/700x400' }}"
@@ -70,14 +73,14 @@
     </div>
 
     <!-- Description -->
-    @if($property->description)
+    @if(!empty($property->description))
     <div class="mt-5">
         <h4 class="fw-bold">Description</h4>
         <p class="text-muted">{{ $property->description }}</p>
     </div>
     @endif
 
-    <!-- ================= BEDROOMS (FULL CRUD) ================= -->
+    <!-- ================= BEDROOMS ================= -->
     <div class="mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="fw-bold">Bedrooms</h4>
@@ -108,7 +111,6 @@
                                          class="img-fluid mt-2 rounded">
                                 @endif
 
-                                <!-- DELETE -->
                                 <form action="{{ route('agent.bedrooms.destroy', $bedroom->id) }}"
                                       method="POST"
                                       onsubmit="return confirm('Delete this bedroom?')"
@@ -132,7 +134,7 @@
         @endif
     </div>
 
-    <!-- ================= BATHROOMS (FULL CRUD) ================= -->
+    <!-- ================= BATHROOMS ================= -->
     <div class="mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="fw-bold">Bathrooms</h4>
@@ -168,7 +170,6 @@
                                          class="img-fluid mt-2 rounded">
                                 @endif
 
-                                <!-- DELETE -->
                                 <form action="{{ route('agent.bathrooms.destroy', $bathroom->id) }}"
                                       method="POST"
                                       onsubmit="return confirm('Delete this bathroom?')"
