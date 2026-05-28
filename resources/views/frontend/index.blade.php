@@ -185,16 +185,14 @@
 
     </section><!-- /Agents Section -->
 
-    <!-- Testimonials Section -->
-<section id="testimonials" class="testimonials section">
+    <section id="testimonials" class="testimonials section">
   <div class="container section-title" data-aos="fade-up">
     <h2>Testimonials</h2>
     <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
   </div>
 
-  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-    <!-- Swiper Slider -->
-    <div class="swiper testimonials-slider" style="max-width: 900px;">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper testimonials-slider">
       <div class="swiper-wrapper">
         @foreach($testimonials as $item)
         <div class="swiper-slide">
@@ -219,68 +217,48 @@
         @endforeach
       </div>
 
-      <!-- Swiper Pagination -->
       <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>
 
-<!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-<!-- Swiper JS -->
-<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script>
   const swiper = new Swiper(".testimonials-slider", {
-    slidesPerView: 1.5,
-    spaceBetween: 20,
     loop: true,
     centeredSlides: true,
     autoplay: {
-      delay: 3000,  // Automatic slide kila 3 sekunde
+      delay: 3000,
       disableOnInteraction: false,
     },
+    speed: 1000,
+    slidesPerView: 1, /* Inaonyesha kadi moja tu katikati pande zote */
+    spaceBetween: 30,
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
     },
-    breakpoints: {
-      768: { slidesPerView: 2, spaceBetween: 30 },
-      1200: { slidesPerView: 3, spaceBetween: 40 },
-    },
-    on: {
-      init: function() { updateFadedSlides(this); },
-      slideChange: function() { updateFadedSlides(this); },
-    },
   });
-
-  function updateFadedSlides(swiper) {
-    swiper.slides.forEach(slide => slide.classList.remove('prev-slide', 'next-slide', 'active-slide'));
-    const activeIndex = swiper.activeIndex;
-    const total = swiper.slides.length;
-
-    const activeSlide = swiper.slides[activeIndex];
-    activeSlide.classList.add('active-slide');
-
-    const prevSlide = swiper.slides[activeIndex - 1 < 0 ? total - 1 : activeIndex - 1];
-    const nextSlide = swiper.slides[activeIndex + 1 >= total ? 0 : activeIndex + 1];
-
-    prevSlide.classList.add('prev-slide');
-    nextSlide.classList.add('next-slide');
-  }
 </script>
 
-
-<!-- Custom CSS -->
 <style>
+  /* Hapa ndio tunabana slider ikae katikati tu na iache space kulia na kushoto */
+  .testimonials-slider {
+    max-width: 700px; 
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 45px;
+  }
+
   .testimonial-item {
     background: #fff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     text-align: center;
-    transition: transform 0.4s, opacity 0.4s;
+    transition: all 0.4s ease;
   }
 
   .testimonial-img {
@@ -289,35 +267,29 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 12px;
+    border: 3px solid #eee;
   }
 
   .stars i {
     color: #ffb400;
   }
 
+  /* Swiper hutumia class hii kwa slide iliyopo mbele ya macho ya mtu */
   .swiper-slide {
-    opacity: 0.3;
-    transform: scale(0.85);
-    transition: transform 0.4s, opacity 0.4s;
+    opacity: 0.4;
+    transform: scale(0.9);
+    transition: transform 0.5s ease, opacity 0.5s ease;
   }
 
-  .swiper-slide.active-slide {
+  .swiper-slide-active {
     opacity: 1;
     transform: scale(1);
   }
 
-  .swiper-slide.prev-slide,
-  .swiper-slide.next-slide {
-    opacity: 0.5;
-    transform: scale(0.9);
-  }
-
-  .swiper {
-    padding-top: 20px;
-    padding-bottom: 30px;
+  .swiper-pagination-bullet-active {
+    background-color: #ffb400; /* Inabadilisha rangi ya vitone viendane na nyota yako */
   }
 </style>
-
 
 
 
