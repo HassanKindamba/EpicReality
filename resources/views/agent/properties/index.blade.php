@@ -12,12 +12,13 @@
     </a>
 </div>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Title</th>
             <th>Link</th>
+            <th>Location</th>
             <th>Description</th>
             <th>Availability</th>
             <th>Type</th>
@@ -33,41 +34,49 @@
         @foreach($properties as $property)
         <tr>
             <td>{{ $property->id }}</td>
+
             <td>{{ $property->title }}</td>
+
             <td>
                 <a href="{{ $property->link }}" target="_blank">
                     {{ $property->link }}
                 </a>
             </td>
+
+            <td>{{ $property->location ?? 'Not specified' }}</td>
+
             <td>{{ $property->description ?? '-' }}</td>
+
             <td>{{ $property->availability_status }}</td>
+
             <td>{{ $property->property_type }}</td>
+
             <td>{{ $property->visibility_status }}</td>
+
             <td>${{ number_format($property->price, 2) }}</td>
 
             <td>
                 @if($property->image)
-                    <img src="{{ asset('storage/'.$property->image) }}" width="100">
+                    <img src="{{ asset('storage/'.$property->image) }}" width="80">
+                @else
+                    -
                 @endif
             </td>
 
-            <td>{{ $property->user ? $property->user->name : '-' }}</td>
+            <td>{{ $property->user->name ?? '-' }}</td>
 
             <td class="d-flex gap-2">
 
-                {{-- EDIT (AGENT ROUTE) --}}
                 <a href="{{ route('agent.properties.edit', $property->id) }}"
                    class="btn btn-sm btn-warning">
                     Edit
                 </a>
 
-                {{-- VIEW (OPTIONAL - unaweza kuondoa kama hutaki agent view single page) --}}
                 <a href="{{ route('agent.properties.show', $property->id) }}"
-                   class="btn btn-info btn-sm">
+                   class="btn btn-sm btn-info">
                     View
                 </a>
 
-                {{-- DELETE (AGENT ROUTE) --}}
                 <form action="{{ route('agent.properties.destroy', $property->id) }}"
                       method="POST">
                     @csrf
