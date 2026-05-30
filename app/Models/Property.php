@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Models;
+use App\Models\User;
+use App\Models\Bedroom;
+use App\Models\Bathroom;
 
 use Illuminate\Database\Eloquent\Model;
 
