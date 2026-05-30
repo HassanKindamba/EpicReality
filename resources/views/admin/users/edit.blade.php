@@ -10,20 +10,40 @@
 
         <div class="mb-3">
             <label>Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                value="{{ $user->name }}"
+                required>
         </div>
 
         <div class="mb-3">
             <label>Email</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                value="{{ $user->email }}"
+                required>
         </div>
 
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="is_admin" class="form-check-input" id="is_admin" {{ $user->is_admin ? 'checked' : '' }}>
-            <label class="form-check-label" for="is_admin">Admin?</label>
+        <div class="mb-3">
+            <label for="role">Role</label>
+            <select name="role" id="role" class="form-control" required>
+                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>
+                    Admin
+                </option>
+
+                <option value="agent" {{ $user->role == 'agent' ? 'selected' : '' }}>
+                    Agent
+                </option>
+            </select>
         </div>
 
-        <button type="submit" class="btn btn-success">Update User</button>
+        <button type="submit" class="btn btn-success">
+            Update User
+        </button>
     </form>
 </div>
 @endsection
