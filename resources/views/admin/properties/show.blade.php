@@ -8,7 +8,9 @@
         <h2 class="fw-bold">{{ $property->title }}</h2>
 
         <p class="text-muted">
-            <i class="bi bi-geo-alt"></i> {{ $property->location ?? 'Location not specified' }}
+            <i class="bi bi-geo-alt"></i>
+            <strong>Location:</strong> {{ $property->location_status }}
+            <td>{{ $property->location ?? 'Not specified' }}</td>
         </p>
 
         <p class="text-muted">

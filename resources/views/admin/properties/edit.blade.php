@@ -25,6 +25,11 @@
     </div>
 
     <div class="mb-3">
+    <label>Location</label>
+    <input type="text" name="location" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
         <label>Description</label>
         <textarea name="description" class="form-control" rows="4">{{ $property->description }}</textarea>
     </div>

@@ -14,6 +14,7 @@
             <th>Id</th>
             <th>Title</th>
             <th>Link</th>
+            <th>Location</th>
             <th>Description</th>
             <th>Availability</th>
             <th>Type</th>
@@ -30,6 +31,7 @@
             <td>{{ $property->id }}</td>
             <td>{{ $property->title }}</td>
             <td><a href="{{ $property->link }}" target="_blank">{{ $property->link }}</a></td>
+            <td>{{ $property->location ?? 'Not specified' }}</td>
             <td>{{ $property->description ?? '-' }}</td>
             <td>{{ $property->availability_status }}</td>
             <td>{{ $property->property_type }}</td>
