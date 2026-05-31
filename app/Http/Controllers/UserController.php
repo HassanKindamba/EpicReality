@@ -16,6 +16,26 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+
+    public function pending()
+    {
+        $users = User::where('role', 'agent')
+                    ->where('status', 'pending')
+                    ->get();
+
+        return view('admin.users.pending', compact('users'));
+    }
+
+    public function approve($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->status = 'active';
+        $user->is_approved = 1;
+        $user->save();
+
+        return back()->with('success', 'User approved successfully');
+    }
     // Show create form
     public function create()
     {
@@ -37,6 +57,8 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'status' => $request->role === 'admin' ? 'active' : 'pending',
+            'is_approved' => $request->role === 'admin' ? 1 : 0,
         ]);
 
         return redirect()
