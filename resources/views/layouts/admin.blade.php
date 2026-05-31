@@ -37,6 +37,23 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.users.index') }}">Users</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimonials.index') }}">Testimonials</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.contact.index') }}">Contact</a></li>
+            <li class="nav-item position-relative">
+                <a class="nav-link" href="{{ route('admin.users.pending') }}">
+                    Pending Agents
+                </a>
+
+                @php
+                    $pendingAgentsCount = \App\Models\User::where('role', 'agent')
+                                                ->where('status', 'pending')
+                                                ->count();
+                @endphp
+
+                @if($pendingAgentsCount > 0)
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ $pendingAgentsCount }}
+                    </span>
+                @endif
+            </li>
         @endif
 
 
