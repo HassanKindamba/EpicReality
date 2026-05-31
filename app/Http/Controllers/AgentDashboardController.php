@@ -8,7 +8,12 @@ class AgentDashboardController extends Controller
 {
     public function index()
     {
-        $properties = Property::where('user_id', auth()->id())->get();
+        if (!auth()->user()->is_approved) {
+            return redirect('/')
+                ->with('error', 'Your account is pending admin approval.');
+        }
+
+        $properties = auth()->user()->properties;
 
         return view('agent.dashboard', compact('properties'));
     }
