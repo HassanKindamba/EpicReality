@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -11,7 +10,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Show login page
      */
     public function create(): View
     {
@@ -19,41 +18,66 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Handle login request
      */
     public function store(Request $request)
     {
-        // Validate login credentials
+        // Validate input
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
         $credentials = $request->only('email', 'password');
 
+        // Try authentication
         if (Auth::attempt($credentials)) {
 
-            // Login successful
+            $user = Auth::user();
+
+            // Check if account is active
+            if ($user->status !== 'active') {
+                Auth::logout();
+
+                return back()->withErrors([
+                    'email' => 'Account is pending approval.',
+                ]);
+            }
+
+            // Check approval
+            if ($user->is_approved != 1) {
+                Auth::logout();
+
+                return back()->withErrors([
+                    'email' => 'Account not approved yet.',
+                ]);
+            }
+
+            // Regenerate session
             $request->session()->regenerate();
 
-            // Redirect based on role
-            if (Auth::user()->role == 'admin') {
+            // Role-based redirect
+            if ($user->role === 'admin') {
                 return redirect('/admin/dashboard');
             }
 
             return redirect('/agent/dashboard');
         }
 
-        // Login failed
+        // If login fails
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');
