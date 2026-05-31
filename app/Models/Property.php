@@ -38,4 +38,9 @@ class Property extends Model
     {
         return $this->hasMany(Bathroom::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(PropertyImage::class);
+    }
 }

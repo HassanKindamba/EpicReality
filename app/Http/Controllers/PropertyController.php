@@ -12,7 +12,7 @@ class PropertyController extends Controller
     // List all properties (admin)
     public function index()
     {
-        $properties = Property::all();
+        $properties = Property::with('images')->get();
         return view('admin.properties.index', compact('properties'));
     }
 
