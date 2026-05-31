@@ -63,6 +63,12 @@ Route::middleware(['auth', AdminMiddleware::class])
         Route::get('/dashboard', [AdminController::class, 'index'])
             ->name('dashboard');
 
+        Route::get('/users/{id}/approve', [UserController::class, 'approve'])
+    ->name('users.approve');
+
+Route::get('/pending-agents', [UserController::class, 'pending'])
+    ->name('users.pending');
+
         // CRUD
         Route::resource('homes', HomeController::class);
         Route::resource('services', ServiceController::class);
