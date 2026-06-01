@@ -60,7 +60,7 @@
 
     <div class="mb-3">
         <label>Image</label>
-        <input type="file" name="image" class="form-control" accept="image/*">
+        <input type="file" name="images[]" class="form-control" accept="image/*" multiple>
     </div>
 
     <!-- Optional: User ID (if assigning manually, otherwise use logged-in user) -->
