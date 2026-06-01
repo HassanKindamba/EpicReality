@@ -38,8 +38,12 @@
             <td>{{ $property->visibility_status }}</td>
             <td>${{ number_format($property->price, 2) }}</td>
             <td>
-                @if($property->image)
-                    <img src="{{ asset('storage/'.$property->image) }}" width="100">
+                @if($property->images->count())
+                    <img src="{{ asset('storage/'.$property->images->first()->image_path) }}"
+                        width="100"
+                        style="object-fit: cover; height: 70px; border-radius: 6px;">
+                @else
+                    <span class="text-muted">No Image</span>
                 @endif
             </td>
             <td>{{ $property->user ? $property->user->name : '-' }}</td>
