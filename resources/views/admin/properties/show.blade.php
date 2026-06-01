@@ -9,8 +9,7 @@
 
         <p class="text-muted">
             <i class="bi bi-geo-alt"></i>
-            <strong>Location:</strong> {{ $property->location_status }}
-            <td>{{ $property->location ?? 'Not specified' }}</td>
+            <strong>Location:</strong> {{ $property->location ?? 'Not specified' }}
         </p>
 
         <p class="text-muted">
@@ -24,11 +23,18 @@
     </div>
 
     <div class="row">
+
         <!-- Property Image -->
         <div class="col-md-7">
-            <img src="{{ $property->image ? asset('storage/'.$property->image) : 'https://via.placeholder.com/700x400' }}"
-                 class="d-block w-100 rounded"
-                 style="height: 400px; object-fit: cover;">
+            @if($property->images->count())
+                <img src="{{ asset('storage/'.$property->images->first()->image_path) }}"
+                     class="d-block w-100 rounded"
+                     style="height: 400px; object-fit: cover;">
+            @else
+                <img src="https://via.placeholder.com/700x400"
+                     class="d-block w-100 rounded"
+                     style="height: 400px; object-fit: cover;">
+            @endif
         </div>
 
         <!-- Property Info -->
@@ -69,6 +75,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- Description -->
@@ -109,7 +116,6 @@
                                          class="img-fluid mt-2 rounded">
                                 @endif
 
-                                <!-- DELETE BEDROOM -->
                                 <form action="{{ route('admin.bedrooms.destroy', $bedroom->id) }}"
                                       method="POST"
                                       onsubmit="return confirm('Delete this bedroom?')"
@@ -169,7 +175,6 @@
                                          class="img-fluid mt-2 rounded">
                                 @endif
 
-                                <!-- DELETE BATHROOM -->
                                 <form action="{{ route('admin.bathrooms.destroy', $bathroom->id) }}"
                                       method="POST"
                                       onsubmit="return confirm('Delete this bathroom?')"
