@@ -47,12 +47,16 @@ class FrontendController extends Controller
 }
 
 
-    public function properties()
-{
-    $properties = Property::latest()->get();
+   public function properties()
+    {
+        $properties = Property::with([
+            'images',
+            'bedrooms',
+            'bathrooms'
+        ])->latest()->get();
 
-    return view('frontend.properties', compact('properties'));
-}
+        return view('frontend.properties', compact('properties'));
+    }
     public function contact()
     {
         return view('frontend.contact');
