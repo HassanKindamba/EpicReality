@@ -71,17 +71,17 @@
                             <!-- IMAGE -->
                             <div class="property-image-wrapper">
 
-                                @if($property->image)
+                                @if($property->images->count())
 
-                                    <img src="{{ asset('storage/'.$property->image) }}"
-                                         alt="{{ $property->title }}"
-                                         class="property-img">
+                                    <img src="{{ asset('storage/'.$property->images->first()->image_path) }}"
+                                        alt="{{ $property->title }}"
+                                        class="property-img">
 
                                 @else
 
                                     <img src="{{ asset('assets/img/properties/property-1.jpg') }}"
-                                         alt="{{ $property->title }}"
-                                         class="property-img">
+                                        alt="{{ $property->title }}"
+                                        class="property-img">
 
                                 @endif
 
