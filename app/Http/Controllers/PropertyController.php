@@ -31,49 +31,45 @@ class PropertyController extends Controller
 
     // Store new property
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'link'  => 'required|url|max:255',
-            'location' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'availability_status' => 'required|in:Available,Occupied,Not In Use',
-            'property_type' => 'required|in:Apartment,House,Commercial',
-            'price' => 'required|numeric',
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'link'  => 'required|url|max:255',
+        'location' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'availability_status' => 'required|in:Available,Occupied,Not In Use',
+        'property_type' => 'required|in:Apartment,House,Commercial',
+        'price' => 'required|numeric',
+        'images' => 'nullable',
+        'images.*' => 'image|max:2048',
+    ]);
 
-            // MULTIPLE IMAGES
-            'images' => 'nullable',
-            'images.*' => 'image|max:2048',
-        ]);
+    $property = Property::create([
+        'title' => $request->title,
+        'link' => $request->link,
+        'location' => $request->location,
+        'description' => $request->description,
+        'availability_status' => $request->availability_status,
+        'property_type' => $request->property_type,
+        'price' => $request->price,
+        'user_id' => Auth::id(),
+    ]);
 
-        // Create property
-        $property = new Property();
-        $property->title = $request->title;
-        $property->link = $request->link;
-        $property->location = $request->location;
-        $property->description = $request->description;
-        $property->availability_status = $request->availability_status;
-        $property->property_type = $request->property_type;
-        $property->price = $request->price;
-        $property->user_id = Auth::id();
-        $property->save();
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $img) {
 
-        // Upload multiple images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $img) {
-                $path = $img->store('properties', 'public');
+            $path = $img->store('properties', 'public');
 
-                PropertyImage::create([
-                    'property_id' => $property->id,
-                    'image_path' => $path
-                ]);
-            }
+            PropertyImage::create([
+                'property_id' => $property->id,
+                'image_path' => $path
+            ]);
         }
-
-        return redirect()->route('admin.properties.index')
-                         ->with('success', 'Property added successfully!');
     }
 
+    return redirect()->route('admin.properties.index')
+        ->with('success', 'Property added successfully!');
+}
     // Show single property
     public function show($id)
 {
