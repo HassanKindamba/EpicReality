@@ -11,10 +11,10 @@
 
     <div class="hero-overlay"></div>
 
-    @if($property->image)
-        <img src="{{ asset('storage/' . $property->image) }}"
-             alt="{{ $property->title }}"
-             class="hero-image">
+    @if($property->images->count())
+    <img src="{{ asset('storage/' . $property->images->first()->image_path) }}"
+         alt="{{ $property->title }}"
+         class="hero-image">
     @endif
 
     <div class="hero-content container">
