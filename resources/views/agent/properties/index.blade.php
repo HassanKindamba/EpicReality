@@ -56,8 +56,9 @@
             <td>${{ number_format($property->price, 2) }}</td>
 
             <td>
-                @if($property->image)
-                    <img src="{{ asset('storage/'.$property->image) }}" width="80">
+                @if($property->images->count())
+                    <img src="{{ asset('storage/'.$property->images->first()->image_path) }}"
+                        width="80">
                 @else
                     -
                 @endif
