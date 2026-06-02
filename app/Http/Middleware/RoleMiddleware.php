@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
-        if (auth()->check() && auth()->user()->role === $role) {
-            return $next($request);
+        if (!in_array($request->user()->role, $roles)) {
+            return response()->json(['message' => 'Huna ruhusa'], 403);
         }
 
-        abort(403, 'Access denied');
+        return $next($request);
     }
 }
