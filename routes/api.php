@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\BedroomController;
 use App\Http\Controllers\Api\BathroomController;
 use App\Http\Controllers\Api\AdminDashboardController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
