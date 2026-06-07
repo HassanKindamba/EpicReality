@@ -1,19 +1,24 @@
 <template>
   <ion-page>
-    <ion-content class="login-bg">
+    <ion-content class="register-bg">
 
-      <div class="login-wrapper">
+      <div class="register-wrapper">
 
-        <ion-card class="login-card">
+        <ion-card class="register-card">
 
           <ion-card-header>
             <ion-card-title class="title">
-              Epic Reality
+              Create Account
             </ion-card-title>
-            <p class="subtitle">Login to your account</p>
+            <p class="subtitle">Join Epic Reality</p>
           </ion-card-header>
 
           <ion-card-content>
+
+            <ion-item class="input">
+              <ion-label position="stacked">Name</ion-label>
+              <ion-input v-model="name" type="text"></ion-input>
+            </ion-item>
 
             <ion-item class="input">
               <ion-label position="stacked">Email</ion-label>
@@ -25,12 +30,12 @@
               <ion-input v-model="password" type="password"></ion-input>
             </ion-item>
 
-            <ion-button expand="block" class="login-btn" @click="handleLogin">
-              Login
+            <ion-button expand="block" class="register-btn" @click="handleRegister">
+              Register
             </ion-button>
 
-            <ion-button expand="block" fill="outline" class="register-btn" @click="goRegister">
-              Create Account
+            <ion-button expand="block" fill="outline" class="login-btn" @click="goLogin">
+              Back to Login
             </ion-button>
 
           </ion-card-content>
@@ -46,7 +51,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
 
 import {
   IonPage,
@@ -61,45 +65,37 @@ import {
   IonButton
 } from '@ionic/vue';
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
 
 const router = useRouter();
-const auth = useAuthStore();
 
-const handleLogin = async () => {
-  try {
-    await auth.login(email.value, password.value);
+const handleRegister = () => {
+  console.log({
+    name: name.value,
+    email: email.value,
+    password: password.value
+  });
 
-    const user = auth.user;
-
-    if (user.role === 'admin') {
-      router.push('/admin');
-    } else if (user.role === 'agent') {
-      router.push('/agent');
-    } else {
-      router.push('/properties');
-    }
-
-  } catch (e) {
-    alert('Login imekataa');
-  }
+  alert('Account created successfully!');
+  router.push('/login');
 };
 
-const goRegister = () => {
-  router.push('/register');
+const goLogin = () => {
+  router.push('/login');
 };
 </script>
 
 <style scoped>
-.login-bg {
+.register-bg {
   --background: linear-gradient(135deg, #0f172a, #1e293b);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.login-wrapper {
+.register-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -107,7 +103,7 @@ const goRegister = () => {
   padding: 20px;
 }
 
-.login-card {
+.register-card {
   width: 100%;
   max-width: 380px;
   border-radius: 16px;
@@ -116,7 +112,7 @@ const goRegister = () => {
 
 .title {
   text-align: center;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
 }
 
@@ -130,12 +126,12 @@ const goRegister = () => {
   margin-bottom: 12px;
 }
 
-.login-btn {
+.register-btn {
   margin-top: 10px;
-  --background: #2563eb;
+  --background: #16a34a;
 }
 
-.register-btn {
+.login-btn {
   margin-top: 10px;
 }
 </style>
