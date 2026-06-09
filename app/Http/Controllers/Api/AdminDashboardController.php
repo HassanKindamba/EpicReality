@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Property;
+use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
 {
-    public function stats()
+    public function stats(Request $request)
     {
         return response()->json([
-            'total_users' => User::count(),
-            'agents' => User::where('role', 'agent')->count(),
-            'properties' => Property::count(),
-            'latest_properties' => Property::latest()->take(5)->get()
+            'debug' => 'HELLO_ADMIN_STATS',
+            'time' => now()->toDateTimeString(),
         ]);
     }
 }
